@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Crawl My Dungeon!</title>
+
+<style>
+        canvas {
+            border: 1px solid #d3d3d3;
+            background-color: #f1f1f1;
+        }
+        </style>
+</head>
+<body onload="startGame()">
+    <h3>Sucka free video games</h3>
+    
+    <script>
+
+            var myGamePiece;
+        // create a function to start game play
+        // this is called by body "onload"
+        function startGame() {
+            console.log("start the game!")
+            myGameArea.start();
+            myGamePiece = new component(30, 30, "red", 10, 120);
+        }
+
+        function component(width, height, color, x, y) {
+            this.width = width;
+            this.height = height;
+            this.x = x;
+            this.y = y;
+            this.update = function() { 
+                ctx = myGameArea.context;
+                ctx.fillStyle = color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+        }
+
+        // create a function that defines the game area
+        // place a canvas element
+        // the start method defines the canvas dimensions and grabs 2d contextf
+        // finally insert it beneath our title which is the second child node of body (zero based)
+        var myGameArea = {
+            canvas: document.createElement('canvas'), 
+            start: function() {
+                this.canvas.width =  420;
+                this.canvas.height = 270;
+                this.context = this.canvas.getContext("2d");
+                document.body.insertBefore(this.canvas, document.body.childNodes[2]);
+                this.interval = setInterval(updateGameArea, 20);
+                
+            },
+            clear: function() {
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+            }
+        }
+
+        function updateGameArea() {
+            myGameArea.clear();
+            // myGamePiece.x += 1;
+            myGamePiece.update();
+        }
+        
+    </script>
+    <script src="/reload/reload.js"></script> <!-- it's necessary -->
+</body>
+</html>
